@@ -18,10 +18,11 @@
     const speed = settings.speed * 1000
     const breakPoint = 1120
 
-    const $table = this
-    const $cell = $table.find('td')
-    const $prevBtn = $table.find('.prev-btn')
-    const $nextBtn = $table.find('.next-btn')
+    const that = this
+    const $table = that.find('table')
+    const $cell = that.find('td')
+    const $prevBtn = that.find('.prev-btn')
+    const $nextBtn = that.find('.next-btn')
 
     let currentCol = 0
     const cellWidth = getCellWidth($cell, currentCol, slide)
@@ -30,6 +31,9 @@
 
     $($cell).on('click', function () {
       settings.whenClick($(this))
+      that[0].classList[1] === 'default'
+        ? addActiveClassStyle($(this), 'gray-cross')
+        : addActiveClassStyle($(this), 'red-title')
     })
 
     $(window).resize(
@@ -51,14 +55,16 @@
       const firstColWidth = that.find('th:first')[0].offsetWidth
 
       $prevBtn.add($nextBtn).css({ display: 'none' })
+      $(that).css({ width: 'auto' })
 
       if (isSmallScreen) {
         $prevBtn.add($nextBtn).css({ display: 'block' })
-        $($table).css({
+        $(that).css({
           width: firstColWidth + getShowWidth($cell, currentCol, show)
         })
       }
-      const cellWidth = getCellWidth($cell, currentCol, slide)
+      return firstColWidth
+    }
 
     // 如果使用者 resize window 執行
     function windowResize() {

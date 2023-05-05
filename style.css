@@ -20,7 +20,7 @@
 }
 
 .container {
-  margin: 2rem;
+  margin: 2rem 1rem;
 }
 
 h4.caption {
@@ -30,7 +30,8 @@ h4.caption {
 /* --- table --- */
 
 table {
-  width: 100%;
+  position: relative;
+  width: 60%;
   border-collapse: collapse;
 }
 
@@ -48,10 +49,21 @@ th.row-title {
   position: sticky;
 }
 
+table th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
 th {
   padding: 0.2rem 0.5rem;
-  min-width: 8rem;
+  min-width: 6.5rem;
   border: 1px solid var(--tableBorder);
+}
+
+th,
+td {
+  white-space: normal;
 }
 
 .header {
@@ -82,7 +94,7 @@ th {
 
 .cell {
   padding: 0.8rem 0.5rem;
-  min-width: 8rem;
+  min-width: 6.5rem;
   text-align: center;
   border: 1px solid var(--tableBorder);
   cursor: pointer;
@@ -111,6 +123,10 @@ th {
 @media (width <= 1120px) {
   .frzTable {
     overflow: hidden;
+  }
+  th,
+  td {
+    white-space: nowrap;
   }
 }
 
