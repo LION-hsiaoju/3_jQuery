@@ -7,6 +7,7 @@ $('.frzTable.default').frzTable({
   },
   // 設定花多久時間移動完成
   speed: 0.4,
+  useGrayCross: true,
 
   // 每次點擊儲存格時會執行此 callback，並帶入所點擊的儲存格 jquery 物件
   whenClick: function ($element) {

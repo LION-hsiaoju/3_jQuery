@@ -20,7 +20,8 @@
 }
 
 .container {
-  margin: 2rem 1rem;
+  max-width: 1600px;
+  margin: 2rem;
 }
 
 h4.caption {
@@ -28,7 +29,6 @@ h4.caption {
 }
 
 /* --- table --- */
-
 table {
   position: relative;
   width: 60%;
@@ -63,7 +63,7 @@ th {
 
 th,
 td {
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .header {
@@ -120,7 +120,7 @@ td {
   font-size: 0.8rem;
 }
 
-@media (width <= 1120px) {
+@media (width <= 1080px) {
   .frzTable {
     overflow: hidden;
   }

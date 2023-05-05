@@ -1,4 +1,3 @@
-
 (function ($) {
   $.fn.frzTable = function (options) {
     const settings = $.extend(
@@ -8,6 +7,7 @@
           show: 4
         },
         speed: 0.3,
+        useGrayCross: false,
         whenClick: function () {}
       },
       options
@@ -16,24 +16,26 @@
     const show = settings.count.show
     const slide = settings.count.slide
     const speed = settings.speed * 1000
-    const breakPoint = 1120
+    const breakPoint = 1080
 
     const that = this
     const $table = that.find('table')
     const $cell = that.find('td')
     const $prevBtn = that.find('.prev-btn')
     const $nextBtn = that.find('.next-btn')
+    const columnAmount = that.find('thead > tr > th').length - 1
 
     let currentCol = 0
     const cellWidth = getCellWidth($cell, currentCol, slide)
 
     windowResize()
 
-    $($cell).on('click', function () {
+    $cell.on('click', function () {
       settings.whenClick($(this))
-      that[0].classList[1] === 'default'
-        ? addActiveClassStyle($(this), 'gray-cross')
-        : addActiveClassStyle($(this), 'red-title')
+      addActiveStyle(
+        $(this),
+        settings.useGrayCross ? 'gray-cross' : 'red-title'
+      )
     })
 
     $(window).resize(
@@ -115,6 +117,44 @@
         clearTimeout(timeout)
         timeout = setTimeout(later, wait)
         if (callNow) func.apply(context, arguments)
+      }
+    }
+
+    function addActiveClassStyle($element, style) {
+      const columnCell = $($element).index()
+      const rowCell = $($element).closest('tr').index() + 1
+
+      $($cell).removeClass('content-active bg-active')
+      $($table).find('th').removeClass('title-active')
+      $($element).addClass('content-active')
+
+      switch (style) {
+        case 'gray-cross':
+          $($table)
+            .find(`tr td:nth-child(${columnCell + 1})`)
+            .not($($element))
+            .addClass('bg-active')
+          $($table)
+            .find(`tr:nth-child(${rowCell}) td`)
+            .not($($element))
+            .addClass('bg-active')
+          break
+
+        case 'red-title':
+          $($table)
+            .find(`tr th:nth-child(${columnCell + 1})`)
+            .not($($element))
+            .addClass('title-active')
+          $($table)
+            .find(`tbody tr:nth-child(${rowCell}) th`)
+            .not($($element))
+            .addClass('title-active')
+          break
+
+        default:
+          throw new Error(
+            'Argument should be either "gray-cross" or "red-title" [string]'
+          )
       }
     }
   }
