@@ -13,7 +13,83 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div></div>
+    <div class="container">
+      <h4 class="caption">style: default</h4>
+      <div class="frzTable default">
+        <div class="prev-btn">❮</div>
+        <div class="next-btn">❯</div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="row" class="row-title">
+                <p class="header">去程</p>
+                <p class="header">回程</p>
+              </th>
+              <th scope="col" class="col-title">12/30 (六)</th>
+              <th scope="col" class="col-title">12/31 (日)</th>
+              <th scope="col" class="col-title">01/01 (一)</th>
+              <th scope="col" class="col-title">01/02 (二)</th>
+              <th scope="col" class="col-title">01/03 (三)</th>
+              <th scope="col" class="col-title">01/04 (四)</th>
+              <th scope="col" class="col-title">01/05 (五)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="row-title">12/27 (三)</th>
+              <td class="cell">--</td>
+              <td class="cell">$1,556,800,000,000</td>
+              <td class="cell">$155,800</td>
+              <td class="cell cheapest">$125,580</td>
+              <td class="cell">$155,680</td>
+              <td class="cell">$155,680</td>
+              <td class="cell">$155,680</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="caption">style: rel</h4>
+      <div class="frzTable rel">
+        <div class="prev-btn">❮</div>
+        <div class="next-btn">❯</div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="row" class="row-title">
+                <p class="header">目的地 🡺</p>
+                <p class="header">🡻 出發地</p>
+              </th>
+              <th scope="col" class="col-title">
+                <p class="text-align-left">NRT</p>
+                <p class="text-align-left">東京成田</p>
+              </th>
+              <th scope="col" class="col-title">12/31 (日)</th>
+              <th scope="col" class="col-title">01/01 (一)</th>
+              <th scope="col" class="col-title">01/02 (二)</th>
+              <th scope="col" class="col-title">01/03 (三)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="row-title">
+                <p class="text-align-left">TPE</p>
+                <p class="text-align-left">桃園國際機場</p>
+              </th>
+              <td class="cell cheapest">
+                <p>中華航空公司</p>
+                <p class="price">$15,568</p>
+              </td>
+              <td class="cell">$1,556,800</td>
+              <td class="cell">$155,500</td>
+              <td class="cell">$155,680</td>
+              <td class="cell">$155,680</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="main.js" type="module"></script>
     <script src="usage.js" type="module"></script>
