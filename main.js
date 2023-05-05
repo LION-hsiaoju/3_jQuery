@@ -26,7 +26,6 @@
     const columnAmount = that.find('thead > tr > th').length - 1
 
     let currentCol = 0
-    const cellWidth = getCellWidth($cell, currentCol, slide)
 
     windowResize()
 
@@ -44,12 +43,8 @@
       }, 300)
     )
 
-    $($prevBtn).click(function () {
-      animateTable('prev', cellWidth)
-    })
-    $($nextBtn).click(function () {
-      animateTable('next', cellWidth)
-    })
+    $prevBtn.click(handlePrevBtn)
+    $nextBtn.click(handleNextBtn)
 
     // table 初始化
     function init() {
@@ -60,7 +55,7 @@
       $(that).css({ width: 'auto' })
 
       if (isSmallScreen) {
-        $prevBtn.add($nextBtn).css({ display: 'block' })
+        $nextBtn.css({ display: 'block' })
         $(that).css({
           width: firstColWidth + getShowWidth($cell, currentCol, show)
         })
@@ -71,8 +66,8 @@
     // 如果使用者 resize window 執行
     function windowResize() {
       const firstColWidth = init()
-      $($prevBtn).css({ left: firstColWidth })
-      $($nextBtn).css({ right: 0 })
+      $prevBtn.css({ left: firstColWidth })
+      $nextBtn.css({ right: 0 })
     }
 
     // M 版時，取得「畫面 show 幾格 cell」的總寬
@@ -102,7 +97,35 @@
         default:
           throw new Error('Argument should be either "prev" or "next" [string]')
       }
-      $table.animate({ left: `${symbol}=${width}px` }, speed, 'swing')
+      $table.animate({ right: `${symbol}=${width}px` }, speed, 'swing')
+    }
+
+    function handlePrevBtn() {
+      $nextBtn.css({ display: 'block' })
+      if (currentCol <= slide) {
+        let width = getCellWidth($cell, 0, currentCol)
+        currentCol = 0
+        animateTable('prev', width)
+        $prevBtn.css({ display: 'none' })
+        return
+      }
+      currentCol -= slide
+      let width = getCellWidth($cell, currentCol, currentCol + slide)
+      animateTable('prev', width)
+    }
+
+    function handleNextBtn() {
+      $prevBtn.css({ display: 'block' })
+      if (currentCol + show + slide >= columnAmount) {
+        $nextBtn.css({ display: 'none' })
+        let width = getCellWidth($cell, currentCol, columnAmount - show)
+        currentCol = columnAmount - show
+        animateTable('next', width)
+        return
+      }
+      let width = getCellWidth($cell, currentCol, currentCol + slide)
+      currentCol += slide
+      animateTable('next', width)
     }
 
     function debounce(func, wait, immediate) {
@@ -120,34 +143,34 @@
       }
     }
 
-    function addActiveClassStyle($element, style) {
-      const columnCell = $($element).index()
-      const rowCell = $($element).closest('tr').index() + 1
+    function addActiveStyle($element, style) {
+      const columnCell = $element.index()
+      const rowCell = $element.closest('tr').index() + 1
 
-      $($cell).removeClass('content-active bg-active')
-      $($table).find('th').removeClass('title-active')
-      $($element).addClass('content-active')
+      $cell.removeClass('content-active bg-active')
+      $table.find('th').removeClass('title-active')
+      $element.addClass('content-active')
 
       switch (style) {
         case 'gray-cross':
-          $($table)
+          $table
             .find(`tr td:nth-child(${columnCell + 1})`)
-            .not($($element))
+            .not($element)
             .addClass('bg-active')
-          $($table)
+          $table
             .find(`tr:nth-child(${rowCell}) td`)
-            .not($($element))
+            .not($element)
             .addClass('bg-active')
           break
 
         case 'red-title':
-          $($table)
+          $table
             .find(`tr th:nth-child(${columnCell + 1})`)
-            .not($($element))
+            .not($element)
             .addClass('title-active')
-          $($table)
+          $table
             .find(`tbody tr:nth-child(${rowCell}) th`)
-            .not($($element))
+            .not($element)
             .addClass('title-active')
           break
 
