@@ -1,3 +1,4 @@
+import { priceToLocaleSting, debounce } from './utils.js'
 (function ($) {
   $.fn.frzTable = function (options) {
     const settings = $.extend(
@@ -144,21 +145,6 @@
       })
     }
 
-    function debounce(func, wait, immediate) {
-      let timeout
-      return () => {
-        const context = this
-        const later = () => {
-          timeout = null
-          if (!immediate) func.apply(context, arguments)
-        }
-        const callNow = immediate && !timeout
-        clearTimeout(timeout)
-        timeout = setTimeout(later, wait)
-        if (callNow) func.apply(context, arguments)
-      }
-    }
-
     function addActiveStyle($element, style) {
       const columnCell = $element.index()
       const rowCell = $element.closest('tr').index() + 1
@@ -195,19 +181,6 @@
             'Argument should be either "gray-cross" or "red-title" [string]'
           )
       }
-    }
-
-    // format 價格
-    function priceToLocaleSting(price) {
-      price.forEach((price) => {
-        const value = Number(price.textContent)
-        const formattedPrice = value.toLocaleString('zh-tw', {
-          style: 'currency',
-          currency: 'TWD',
-          maximumFractionDigits: 0
-        })
-        price.innerHTML = formattedPrice + `<span class="price-span"> 起</span>`
-      })
     }
   }
 })(jQuery)
