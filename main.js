@@ -1,4 +1,4 @@
-(function ($) {
+;(function ($) {
   $.fn.frzTable = function (options) {
     const settings = $.extend(
       {
@@ -26,9 +26,10 @@
     const columnAmount = that.find('thead > tr > th').length - 1
     const $columns = that.find('thead > tr > th').slice(1, columnAmount + 1)
     const firstColWidth = that.find('th:first')[0].offsetWidth
-
+    const $price = Array.from(that.find('.price'))
     let currentCol = 0
 
+    priceToLocaleSting($price)
     windowResize()
 
     $cell.on('click', function () {
@@ -42,7 +43,7 @@
     $(window).resize(
       debounce(function () {
         windowResize()
-      }, 300)
+      }, 100)
     )
 
     $prevBtn.click(handlePrevBtn)
@@ -194,6 +195,19 @@
             'Argument should be either "gray-cross" or "red-title" [string]'
           )
       }
+    }
+
+    // format 價格
+    function priceToLocaleSting(price) {
+      price.forEach((price) => {
+        const value = Number(price.textContent)
+        const formattedPrice = value.toLocaleString('zh-tw', {
+          style: 'currency',
+          currency: 'TWD',
+          maximumFractionDigits: 0
+        })
+        price.innerHTML = formattedPrice + `<span class="price-span"> 起</span>`
+      })
     }
   }
 })(jQuery)
