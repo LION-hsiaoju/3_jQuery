@@ -1,4 +1,4 @@
-;(function ($) {
+(function ($) {
   $.fn.frzTable = function (options) {
     const settings = $.extend(
       {

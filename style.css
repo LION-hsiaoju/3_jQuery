@@ -36,7 +36,8 @@ table {
 }
 
 .frzTable,
-td {
+td,
+th {
   position: relative;
 }
 
@@ -135,6 +136,10 @@ td {
   text-align: left;
 }
 
+.check {
+  color: var(--contentSecondary);
+}
+
 .content-active {
   box-shadow: inset 0 0 0 1px var(--tag);
   background-color: var(--selectedBG);
@@ -145,6 +150,23 @@ td {
 }
 
 .bg-active {
-  z-index: -1;
   background-color: var(--active-cell);
+}
+
+.price {
+  font-weight: 700;
+}
+
+.price-span {
+  color: var(--contentSecondary);
+  font-weight: 500;
+}
+
+.year::after {
+  content: '2018';
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  color: darkcyan;
+  font-size: 0.8rem;
 }
