@@ -24,6 +24,8 @@
     const $prevBtn = that.find('.prev-btn')
     const $nextBtn = that.find('.next-btn')
     const columnAmount = that.find('thead > tr > th').length - 1
+    const $columns = that.find('thead > tr > th').slice(1, columnAmount + 1)
+    const firstColWidth = that.find('th:first')[0].offsetWidth
 
     let currentCol = 0
 
@@ -49,7 +51,8 @@
     // table 初始化
     function init() {
       const isSmallScreen = $(window).width() <= breakPoint
-      const firstColWidth = that.find('th:first')[0].offsetWidth
+      currentCol = 0
+      $table.removeAttr('style')
 
       $prevBtn.add($nextBtn).css({ display: 'none' })
       $(that).css({ width: 'auto' })
@@ -57,7 +60,7 @@
       if (isSmallScreen) {
         $nextBtn.css({ display: 'block' })
         $(that).css({
-          width: firstColWidth + getShowWidth($cell, currentCol, show)
+          width: firstColWidth + getShowWidth($columns, currentCol, show)
         })
       }
       return firstColWidth
@@ -65,7 +68,7 @@
 
     // 如果使用者 resize window 執行
     function windowResize() {
-      const firstColWidth = init()
+      init()
       $prevBtn.css({ left: firstColWidth })
       $nextBtn.css({ right: 0 })
     }
@@ -103,29 +106,41 @@
     function handlePrevBtn() {
       $nextBtn.css({ display: 'block' })
       if (currentCol <= slide) {
-        let width = getCellWidth($cell, 0, currentCol)
+        let width = getCellWidth($columns, 0, currentCol)
         currentCol = 0
         animateTable('prev', width)
         $prevBtn.css({ display: 'none' })
+        $(that).css({
+          width: firstColWidth + getShowWidth($columns, currentCol, show)
+        })
         return
       }
       currentCol -= slide
-      let width = getCellWidth($cell, currentCol, currentCol + slide)
+      let width = getCellWidth($columns, currentCol, currentCol + slide)
       animateTable('prev', width)
+      $(that).css({
+        width: firstColWidth + getShowWidth($columns, currentCol, show)
+      })
     }
 
     function handleNextBtn() {
       $prevBtn.css({ display: 'block' })
       if (currentCol + show + slide >= columnAmount) {
         $nextBtn.css({ display: 'none' })
-        let width = getCellWidth($cell, currentCol, columnAmount - show)
+        let width = getCellWidth($columns, currentCol, columnAmount - show)
         currentCol = columnAmount - show
         animateTable('next', width)
+        $(that).css({
+          width: firstColWidth + getShowWidth($columns, currentCol, show)
+        })
         return
       }
-      let width = getCellWidth($cell, currentCol, currentCol + slide)
+      let width = getCellWidth($columns, currentCol, currentCol + slide)
       currentCol += slide
       animateTable('next', width)
+      $(that).css({
+        width: firstColWidth + getShowWidth($columns, currentCol, show)
+      })
     }
 
     function debounce(func, wait, immediate) {

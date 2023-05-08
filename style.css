@@ -145,5 +145,6 @@ td {
 }
 
 .bg-active {
+  z-index: -1;
   background-color: var(--active-cell);
 }

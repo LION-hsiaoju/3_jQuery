@@ -17,7 +17,7 @@ $('.frzTable.default').frzTable({
 
 $('.frzTable.rel').frzTable({
   count: { slide: 1, show: 3 },
-  speed: 0.3,
+
   whenClick: function ($element) {
     console.log($element)
   }
